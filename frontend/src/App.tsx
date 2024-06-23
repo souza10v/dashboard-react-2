@@ -8,6 +8,9 @@ import Footer from './components/footer/Footer';
 import Menu from './components/menu/Menu';
 import Login from './pages/login/Login';
 import "./styles/global.scss"
+import Product from './pages/product/Product';
+import User from './pages/user/User';
+import Error from './pages/error/Error';
 
 function App() {
 
@@ -44,12 +47,24 @@ function App() {
       {
         path:"/products",
         element:<Products/>
+      },
+      {
+        path:"/users/:id",
+        element:<User/>
+      },
+      {
+        path:"/products/:id",
+        element:<Product/>
       }
      ]
     },
     {
       path:"/login",
       element:<Login/>
+    },
+    {
+      path:"*",
+      element: <Error/>
     }
   ]);
 
