@@ -1,16 +1,29 @@
-import Single from "../../components/single/Single"
+import { useEffect, useState } from "react"
 import { singleUser } from "../../data"
+import { api } from "../../services/api";
+import Single from "../../components/single/Single"
 import "./user.scss"
 
 const User = () => {
+  // Fetch data and send to Single Component
+  useEffect(() => {
+    loadCustomers();
+  }, []);
 
-  //Fetch data and send to Single Component
-  
+  async function loadCustomers() {
+    try {
+      const response = await api.get("api/customers");
+      console.log(response.data); // Example usage
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+    }
+  }
+
   return (
     <div className="user">
-      <Single {...singleUser}/>
+      <Single {...singleUser} />
     </div>
-  )
-}
+  );
+};
 
-export default User
+export default User;

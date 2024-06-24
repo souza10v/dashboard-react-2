@@ -1,10 +1,9 @@
 import { GridColDef } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
+import Add from "../../components/add/Add";
 import DataTable from "../../components/dataTable/DataTable";
 import "./users.scss";
-import { useState } from "react";
-import Add from "../../components/add/Add";
-import { userRows } from "../../data";
-// import { useQuery } from "@tanstack/react-query";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
@@ -56,31 +55,36 @@ const columns: GridColDef[] = [
 
 const Users = () => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [customers, setCustomers] = useState([]);
 
-  // TEST THE API
+  useEffect(() => {
+    loadCustomers();
+  }, []);
 
-  // const { isLoading, data } = useQuery({
-  //   queryKey: ["allusers"],
-  //   queryFn: () =>
-  //     fetch("http://localhost:8800/api/users").then(
-  //       (res) => res.json()
-  //     ),
-  // });
+  async function loadCustomers() {
+    try {
+      setLoading(true); 
+      const response = await api.get("/api/customers");
+      setCustomers(response.data);
+      setLoading(false); 
+    } catch (error) {
+      // console.error("Error fetching customers:", error);
+      setLoading(false); 
+    }
+  }
 
   return (
     <div className="users">
       <div className="info">
-        <h1>Users</h1>
+        <h1>Customers</h1>
         <button onClick={() => setOpen(true)}>Add New User</button>
       </div>
-      <DataTable slug="users" columns={columns} rows={userRows} />
-      {/* TEST THE API */}
 
-      {/* {isLoading ? (
-        "Loading..."
-      ) : (
-        <DataTable slug="users" columns={columns} rows={data} />
-      )} */}
+      {loading && <p>Loading...</p>}
+
+      {!loading && <DataTable slug="users" columns={columns} rows={customers} />}
+
       {open && <Add slug="user" columns={columns} setOpen={setOpen} />}
     </div>
   );
