@@ -57,6 +57,7 @@ const Add = (props: Props) => {
 
   // VER API PARA CADASTRAR USUARIO. SE DEVO USAR TRY AND CATCH OU THEN
 
+  //**
   //SENDING TO API
   fetch('/api/createUser', {
     method: 'POST',
@@ -77,6 +78,7 @@ const Add = (props: Props) => {
       console.error('Error creating user:', error);
       // Handle network or other errors
     });
+    //**
 
   // BASIC VALIDATINONS  
   const validateForm = (data: CustomerData): boolean => {
@@ -108,6 +110,9 @@ const Add = (props: Props) => {
           X
         </span>
         <h1>Add new {props.slug}</h1>
+
+        /* adicionar formulario aqui baseado no https://mui.com/material-ui/react-text-field/ */ 
+
         <form onSubmit={handleSubmit}>
           {props.columns
             .filter((item) => item.field !== "id" && item.field !== "img")
