@@ -250,12 +250,12 @@ let products = [
     },
 ];
 
-// GET USERS
+// GET CUSTOMER
 router.get("/api/customers", (req: Request, res: Response) => {
     res.json(users);
 });
 
-// GET USER
+// GET CUSTOMERS
 router.get("/api/users/:id", (req: Request, res: Response) => {
     const user = users.find((user) => user.id === parseInt(req.params.id));
     res.json(user);
