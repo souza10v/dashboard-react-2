@@ -1,8 +1,9 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
-import Add from "../../components/add/Add";
 import DataTable from "../../components/dataTable/DataTable";
+import Button from "@mui/material/Button";
+import AddUser from "../../components/add/addUser/AddUser";
 import "./users.scss";
 
 const columns: GridColDef[] = [
@@ -78,14 +79,14 @@ const Users = () => {
     <div className="users">
       <div className="info">
         <h1>Customers</h1>
-        <button onClick={() => setOpen(true)}>Add New User</button>
+        <Button variant="contained" onClick={() => setOpen(true)}>Add New User</Button>
       </div>
 
       {loading && <p>Loading...</p>}
 
       {!loading && <DataTable slug="users" columns={columns} rows={customers} />}
 
-      {open && <Add slug="user" columns={columns} setOpen={setOpen} />}
+      {open && <AddUser slug="user" columns={columns} setOpen={setOpen} />}
     </div>
   );
 };

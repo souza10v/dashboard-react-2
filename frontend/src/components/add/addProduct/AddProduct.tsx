@@ -1,5 +1,5 @@
 import { GridColDef } from "@mui/x-data-grid";
-import "./add.scss";
+import "./addProduct.scss";
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {

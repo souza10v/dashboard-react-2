@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import "./products.scss";
-import DataTable from "../../components/dataTable/DataTable";
-import Add from "../../components/add/Add";
 import { GridColDef } from "@mui/x-data-grid";
-import { products } from "../../data";
-import { api } from "src/services/api";
+import { api } from "../../services/api"
+import DataTable from "../../components/dataTable/DataTable";
+import Add from "../../components/add/addUser/AddUser";
+import "./products.scss";
+// import { products } from "../../data";
+
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
@@ -80,7 +83,7 @@ const Products = () => {
     <div className="products">
       <div className="info">
         <h1>Products</h1>
-        <button onClick={() => setOpen(true)}>Add New Products</button>
+        <Button variant="contained" onClick={() => setOpen(true)}>Add New Products</Button>
       </div>    
 
       {loading && <p>Loading...</p>}
