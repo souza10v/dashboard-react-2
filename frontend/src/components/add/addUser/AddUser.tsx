@@ -1,7 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
 import React, { useState } from 'react';
 import "./addUser.scss";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   slug: string;
@@ -20,21 +19,26 @@ interface CustomerData {
   phone: string;
   street: string;
   number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  ZIP: string;
 }
 
 const Add = (props: Props) => {
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CustomerData>({
     customerName: '',
     customerLastName: '',
-    dateOfBirth: '', // Consider using a date picker library for better user experience
+    dateOfBirth: '', 
     CPF: '',
     RG: '',
     gender: '',
     email: '',
     phone: '',
     street: '',
-    number: '', // Street address
+    number: '', 
     complement: '',
     neighborhood: '',
     city: '',
@@ -42,8 +46,6 @@ const Add = (props: Props) => {
     ZIP: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
-
-  //Adicionar data de criacao e data de atualizacao no backend
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,32 +57,26 @@ const Add = (props: Props) => {
     props.setOpen(false)
   };
 
-  // VER API PARA CADASTRAR USUARIO. SE DEVO USAR TRY AND CATCH OU THEN
-
-  //**
-  //SENDING TO API
-  fetch('/api/createUser', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ formData }), 
-  })
-    .then((response) => response.json())
-    .then((data) => {
+  async function createUser(formData: CustomerData) {
+    try {
+      const response = await fetch('/api/createUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ formData }), 
+      });
+  
+      const data = await response.json();
+  
       if (data.success) {
         console.log('User created successfully:', data);
-        // Handle successful user creation (e.g., clear form, show success message)
       } else {
         console.error('Error creating user:', data.error);
-        // Handle errors from the backend (e.g., display error message)
       }
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error('Error creating user:', error);
-      // Handle network or other errors
-    });
-    //**
+    }
+  }  
 
-  // BASIC VALIDATINONS  
   const validateForm = (data: CustomerData): boolean => {
     const requiredFields = [
       data.customerName,
@@ -93,14 +89,33 @@ const Add = (props: Props) => {
       data.phone,
       data.street,
       data.number,
+      data.neighborhood,
+      data.city,
+      data.state,
+      data.ZIP
     ];
   
     if (requiredFields.some((field) => !field)) {
       setErrorMessage('Preencha todos os campos marcados.');
-      return true;
+      return false;
     }
-
-    return false; 
+  
+    // Validação de CPF // Melhorar
+    const cpfPattern = /^\d{11}$/;
+    if (!cpfPattern.test(data.CPF)) {
+      setErrorMessage('CPF inválido. Deve conter 11 dígitos numéricos.');
+      return false;
+    }
+  
+    // Validação de email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(data.email)) {
+      setErrorMessage('Email inválido.');
+      return false;
+    }
+  
+    setErrorMessage('');
+    return true; 
   };
 
   return (
