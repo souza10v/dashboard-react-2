@@ -17,6 +17,8 @@ type Props = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+
+//Adicionar no banco de dados talvez usuario que o criou. Ver o que mais
 interface CustomerData {
   customerName: string;
   customerLastName: string;
@@ -35,7 +37,7 @@ interface CustomerData {
   ZIP: string;
 }
 
-const Add = (props: Props) => {
+const AddUser = (props: Props) => {
 
   const [formData, setFormData] = useState<CustomerData>({
     customerName: '',
@@ -63,7 +65,7 @@ const Add = (props: Props) => {
 
     createUser(formData) //chamar ou nao a funcao
 
-    props.setOpen(false)
+    //props.setOpen(false)
   };
 
   async function createUser(formData: CustomerData) { //deixar ou remover?
@@ -107,7 +109,7 @@ const Add = (props: Props) => {
 
         <form onSubmit={handleSubmit}>
 
-         <Box
+          <Box
             component="form"
             sx={{
               '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -127,7 +129,7 @@ const Add = (props: Props) => {
               />
 
               <TextField
-                required
+                //required
                 id="standard-required-lastname"
                 label="Sobrenome"
                 defaultValue={formData.customerLastName}
@@ -137,7 +139,7 @@ const Add = (props: Props) => {
               />
 
               <TextField
-                required
+                //required
                 id="standard-required-date"
                 label="Data de Nascimento"
                 type="date"
@@ -155,7 +157,7 @@ const Add = (props: Props) => {
               />
 
               <TextField //ver pre formatacao de cpf
-                required
+                //required
                 id="standard-required-cpf"
                 label="CPF"
                 defaultValue={formData.CPF}
@@ -166,7 +168,7 @@ const Add = (props: Props) => {
 
 
               <TextField //ver pre formatacao de rg
-                required
+                //required
                 id="standard-required-rg"
                 label="RG"
                 defaultValue={formData.RG}
@@ -202,7 +204,7 @@ const Add = (props: Props) => {
               />
 
               <TextField //ver pre formatacao de telefone
-                required
+                //required
                 id="standard-required-phone"
                 label="Telefone"
                 defaultValue={formData.phone}
@@ -212,7 +214,7 @@ const Add = (props: Props) => {
               />
 
               <TextField
-                required
+                //required
                 id="standard-required-street"
                 label="Rua"
                 defaultValue={formData.street}
@@ -222,7 +224,7 @@ const Add = (props: Props) => {
               />
 
               <TextField
-                required
+                //required
                 id="standard-required-number"
                 label="Número"
                 defaultValue={formData.number}
@@ -241,7 +243,7 @@ const Add = (props: Props) => {
               />
 
               <TextField
-                required
+                //required
                 id="standard-required-neighborhood"
                 label="Bairro"
                 defaultValue={formData.neighborhood}
@@ -251,7 +253,7 @@ const Add = (props: Props) => {
               />
 
               <TextField
-                required
+                //required
                 id="standard-required-city"
                 label="Cidade"
                 defaultValue={formData.city}
@@ -261,7 +263,7 @@ const Add = (props: Props) => {
               />
 
               <TextField
-                required
+                //required
                 id="standard-required-state"
                 label="Estado"
                 defaultValue={formData.state}
@@ -271,7 +273,7 @@ const Add = (props: Props) => {
               />
 
               <TextField //ver pre formatacao de CEP
-                required
+                //required
                 id="standard-required-zip"
                 label="CEP"
                 defaultValue={formData.ZIP}
@@ -279,16 +281,15 @@ const Add = (props: Props) => {
                 onChange={(e) =>
                   setFormData({ ...formData, ZIP: e.target.defaultValue })}
               />
-              
-              <Button type="submit" variant="contained"> 
-                Cadastrar 
-              </Button>
             </div>
           </Box>
+          <Button type="submit" variant="contained">
+            Cadastrar
+          </Button>
         </form>
       </div>
     </div>
   );
 };
 
-export default Add;
+export default AddUser;
