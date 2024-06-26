@@ -1,117 +1,9 @@
-import React, { useState } from 'react';
-import { GridColDef } from "@mui/x-data-grid";
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import InputMask from 'react-input-mask';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import "./addUser.scss";
-import { Button } from '@mui/material';
-
-type Props = {
-  slug: string;
-  columns: GridColDef[];
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-interface CustomerData {
-  customerName: string;
-  customerLastName: string;
-  dateOfBirth: Date;
-  CPF: string;
-  RG: string;
-  gender: string;
-  email: string;
-  phone: string;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  ZIP: string;
-}
-
-const Add = (props: Props) => {
-
-  const [formData, setFormData] = useState<CustomerData>({
-    customerName: '',
-    customerLastName: '',
-    dateOfBirth: new Date(),
-    CPF: '',
-    RG: '',
-    gender: '',
-    email: '',
-    phone: '',
-    street: '',
-    number: '',
-    complement: '',
-    neighborhood: '',
-    city: '',
-    state: '',
-    ZIP: '',
-  });
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log(formData)
-
-    createUser(formData) //chamar ou nao a funcao
-
-    props.setOpen(false)
-  };
-
-  async function createUser(formData: CustomerData) { //deixar ou remover?
-    try {
-      const response = await fetch('/api/createUser', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ formData }),
-      });
-
-      const data = await response.json();
-
-      console.log("data")
-      console.log(data)
-
-      if (data.success) {
-        console.log('User created successfully:', data);
-      } else {
-        console.error('Error creating user:', data.error);
-      }
-    } catch (error) {
-      console.error('Error creating user:', error);
-    }
-  }
-
-  const CPFMask = (props) => {
-    const { inputRef, ...other } = props;
-
-    return (
-      <InputMask mask="999.999.999-99" {...other} ref={inputRef} />
-    );
-  };
-
-  return (
-    <div className="add">
-      <div className="modal">
-        <span className="close" onClick={() => props.setOpen(false)}>
-          X
-        </span>
-        <h1>Cadastar novo cliente</h1>
-
-        <form onSubmit={handleSubmit}>
-
-         <Box
+          <Box
             component="form"
             sx={{
               '& .MuiTextField-root': { m: 1, width: '25ch' },
             }}
+            noValidate
             autoComplete="off"
           >
 
@@ -279,16 +171,5 @@ const Add = (props: Props) => {
                 onChange={(e) =>
                   setFormData({ ...formData, ZIP: e.target.defaultValue })}
               />
-              
-              <Button type="submit" variant="contained"> 
-                Cadastrar 
-              </Button>
             </div>
           </Box>
-        </form>
-      </div>
-    </div>
-  );
-};
-
-export default Add;

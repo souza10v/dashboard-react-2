@@ -78,8 +78,8 @@ const Users = () => {
   return (
     <div className="users">
       <div className="info">
-        <h1>Customers</h1>
-        <Button variant="contained" onClick={() => setOpen(true)}>Add New User</Button>
+        <h1>Clientes</h1>
+        <Button variant="contained" onClick={() => setOpen(true)}>Cadastrar cliente</Button>
       </div>
 
       {loading && <p>Loading...</p>}
