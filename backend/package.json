@@ -13,11 +13,13 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "prisma": "^5.16.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.2",
     "typescritp": "^1.0.0"
   },
   "dependencies": {
+    "@prisma/client": "^5.16.0",
     "cors": "^2.8.5",
     "express": "^4.19.2"
   }
