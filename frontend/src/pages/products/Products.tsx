@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { GridColDef } from "@mui/x-data-grid";
 import { api } from "../../services/api"
 import DataTable from "../../components/dataTable/DataTable";
-import Add from "../../components/add/addUser/AddUser";
-import "./products.scss";
-// import { products } from "../../data";
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import AddProduct from "../../components/add/addProduct/AddProduct"
+import "./products.scss";
+// import { products } from "../../data";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
@@ -82,15 +81,15 @@ const Products = () => {
   return (
     <div className="products">
       <div className="info">
-        <h1>Products</h1>
-        <Button variant="contained" onClick={() => setOpen(true)}>Add New Products</Button>
+        <h1>Produtos</h1>
+        <Button variant="contained" onClick={() => setOpen(true)}>Cadastrar Produto</Button>
       </div>    
 
       {loading && <p>Loading...</p>}
 
       {!loading && <DataTable slug="products" columns={columns} rows={products} />}
 
-      {open && <Add slug="product" columns={columns} setOpen={setOpen} />}
+      {open && <AddProduct slug="product" columns={columns} setOpen={setOpen} />}
     </div>
   );
 };

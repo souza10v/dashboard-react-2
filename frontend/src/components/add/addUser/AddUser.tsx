@@ -287,9 +287,11 @@ const AddUser = (props: Props) => {
               />
             </div>
           </Box>
+
           <Button type="submit" variant="contained">
             Cadastrar
           </Button>
+          
         </form>
       </div>
     </div>
