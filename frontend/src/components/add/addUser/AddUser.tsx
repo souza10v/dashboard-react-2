@@ -17,7 +17,6 @@ type Props = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-
 //Adicionar no banco de dados talvez usuario que o criou. Ver o que mais
 interface CustomerData {
   customerName: string;
@@ -91,13 +90,16 @@ const AddUser = (props: Props) => {
     }
   }
 
-  const CPFMask = (props) => {
-    const { inputRef, ...other } = props;
-
+  const CPFMask = React.forwardRef((props, ref) => {
     return (
-      <InputMask mask="999.999.999-99" {...other} ref={inputRef} />
+      <InputMask
+        {...props}
+        mask="999.999.999-99"
+        ref={ref}
+        maskPlaceholder={null}
+      />
     );
-  };
+  });
 
   return (
     <div className="add">
@@ -162,8 +164,10 @@ const AddUser = (props: Props) => {
                 label="CPF"
                 defaultValue={formData.CPF}
                 variant="standard"
-                onChange={(e) =>
-                  setFormData({ ...formData, CPF: e.target.defaultValue })}
+                onChange={(e) => setFormData({ ...formData, CPF: e.target.value })}
+                InputProps={{
+                  inputComponent: CPFMask as any,
+                }}
               />
 
 
