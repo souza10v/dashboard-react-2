@@ -49,9 +49,35 @@ const AddProduct = (props: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("working ", formData)
+
+    createProduct(formData)
     
     props.setOpen(false)
   };
+
+  async function createProduct(formData: ProductData) { 
+    try {
+      const response = await fetch('/api/createProduct', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ formData }),
+      });
+
+      const data = await response.json();
+
+      console.log("data")
+      console.log(data)
+
+      if (data.success) {
+        console.log('User created successfully:', data);
+      } else {
+        console.error('Error creating user:', data.error);
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+  }
+
 
   return (
 

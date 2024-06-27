@@ -77,7 +77,6 @@ const Products = () => {
     }
   }
 
-
   return (
     <div className="products">
       <div className="info">

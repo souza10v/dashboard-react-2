@@ -286,12 +286,12 @@ const AddUser = (props: Props) => {
                   setFormData({ ...formData, ZIP: e.target.defaultValue })}
               />
             </div>
-          </Box>
 
-          <Button type="submit" variant="contained">
-            Cadastrar
-          </Button>
-          
+            <Button type="submit" variant="contained">
+              Cadastrar
+            </Button>
+
+          </Box>
         </form>
       </div>
     </div>
