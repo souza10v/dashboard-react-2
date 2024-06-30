@@ -173,3 +173,16 @@
               />
             </div>
           </Box>
+
+
+
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  padding: theme.spacing(1),
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center', 
+  marginTop: theme.spacing(2), 
+}));
+
+<Div>{"This div's text looks like that of a button."}</Div>

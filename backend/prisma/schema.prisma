@@ -20,9 +20,9 @@ model Customer {
   id            String   @id @default(uuid())
   firstName     String   @map("customer_name")
   lastName      String   @map("customer_lastname")
-  dateOfBirth   DateTime @map("date_of_birth") // Altere para DateTime para melhor consistência com datas
+  dateOfBirth   DateTime @map("date_of_birth") 
   cpf           String   @unique
-  rg            String?
+  rg            String   @unique
   gender        String?
   email         String   @unique
   phone         String?

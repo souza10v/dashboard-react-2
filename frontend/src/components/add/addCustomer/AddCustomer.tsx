@@ -8,9 +8,10 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import "./addUser.scss";
 import { Button } from '@mui/material';
 import { api } from "../../../services/api";
+import { styled } from '@mui/material/styles';
+import "./addCustomer.scss";
 
 type Props = {
   slug: string;
@@ -37,7 +38,7 @@ interface CustomerData {
   ZIP: string;
 }
 
-const AddUser = (props: Props) => {
+const AddCustomer = (props: Props) => {
 
   const [formData, setFormData] = useState<CustomerData>({
     customerName: '',
@@ -61,8 +62,6 @@ const AddUser = (props: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(formData)
-
     await createUser(formData) //chamar ou nao a funcao
 
     //props.setOpen(false)
@@ -70,21 +69,21 @@ const AddUser = (props: Props) => {
 
   async function createUser(formData: CustomerData) {
     try {
-        const response = await api.post('/new-customer', formData);
-        const data = response.data;
+      const response = await api.post('/new-customer', formData);
+      const data = response.data;
 
-        console.log(data);
-
-        if (data.success) {
-            console.log('User created successfully:', data);
-        } else {
-            console.error('Error creating user:', data.error);
-        }
+      if (data.success) {
+        console.log('Cliente criado com sucesso');
+        setErrorMessage('');
+        props.setOpen(false)
+      } else {
+        console.error('Error ao cadastrar cliente', data.error);
+        setErrorMessage(data.error);
+      }
     } catch (error) {
-        console.error('Error creating user:', error);
+      console.error('Error creating user:', error);
     }
 }
-
 
   const CPFMask = React.forwardRef((props, ref) => {
     return (
@@ -97,6 +96,8 @@ const AddUser = (props: Props) => {
     );
   });
 
+
+
   return (
     <div className="add">
       <div className="modal">
@@ -105,16 +106,12 @@ const AddUser = (props: Props) => {
         </span>
         <h1>Cadastar novo cliente</h1>
 
-        <form onSubmit={handleSubmit}>
-
+        <form onSubmit={handleSubmit} autoComplete="off">
           <Box
-            component="form"
             sx={{
               '& .MuiTextField-root': { m: 1, width: '25ch' },
             }}
-            autoComplete="off"
           >
-
             <div>
               <TextField
                 required
@@ -127,7 +124,7 @@ const AddUser = (props: Props) => {
               />
 
               <TextField
-                //required
+                required
                 id="standard-required-lastname"
                 label="Sobrenome"
                 defaultValue={formData.customerLastName}
@@ -142,19 +139,18 @@ const AddUser = (props: Props) => {
                 label="Data de Nascimento"
                 type="date"
                 variant="standard"
-                defaultValue={formData.dateOfBirth}
+                defaultValue={formData.dateOfBirth.toISOString().substring(0, 10)}
                 InputLabelProps={{
                   shrink: true,
                 }}
                 onChange={(e) => {
                   const parsedDate = new Date(e.target.value);
-                  //console.log(parsedDate);
                   setFormData({ ...formData, dateOfBirth: parsedDate })
                 }
                 }
               />
 
-              <TextField //ver pre formatacao de cpf
+              <TextField
                 //required
                 id="standard-required-cpf"
                 label="CPF"
@@ -166,8 +162,7 @@ const AddUser = (props: Props) => {
                 }}
               />
 
-
-              <TextField //ver pre formatacao de rg
+              <TextField
                 //required
                 id="standard-required-rg"
                 label="RG"
@@ -178,7 +173,8 @@ const AddUser = (props: Props) => {
               />
 
               <FormControl
-                required>
+                //required
+                >
                 <FormLabel id="standard-search-gender">Gênero</FormLabel>
                 <RadioGroup
                   row
@@ -193,7 +189,8 @@ const AddUser = (props: Props) => {
                 </RadioGroup>
               </FormControl>
 
-              <TextField //talvez ocpional
+              <TextField
+                //required
                 id="standard-required-email"
                 type="email"
                 label="Email"
@@ -203,7 +200,7 @@ const AddUser = (props: Props) => {
                   setFormData({ ...formData, email: e.target.value })}
               />
 
-              <TextField //ver pre formatacao de telefone
+              <TextField
                 //required
                 id="standard-required-phone"
                 label="Telefone"
@@ -272,7 +269,7 @@ const AddUser = (props: Props) => {
                   setFormData({ ...formData, state: e.target.value })}
               />
 
-              <TextField //ver pre formatacao de CEP
+              <TextField
                 //required
                 id="standard-required-zip"
                 label="CEP"
@@ -282,17 +279,16 @@ const AddUser = (props: Props) => {
                   setFormData({ ...formData, ZIP: e.target.value })}
               />
             </div>
-
             
 
-          </Box>
-          <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained">
               Cadastrar
             </Button>
+          </Box>
         </form>
       </div>
     </div>
   );
 };
 
-export default AddUser;
+export default AddCustomer;

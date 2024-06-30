@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import DataTable from "../../components/dataTable/DataTable";
 import Button from "@mui/material/Button";
-import AddUser from "../../components/add/addUser/AddUser";
+import AddCustomer from "../../components/add/addCustomer/AddCustomer";
 import "./users.scss";
+
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
@@ -86,7 +87,7 @@ const Users = () => {
 
       {!loading && <DataTable slug="users" columns={columns} rows={customers} />}
 
-      {open && <AddUser slug="user" columns={columns} setOpen={setOpen} />}
+      {open && <AddCustomer slug="user" columns={columns} setOpen={setOpen} />}
     </div>
   );
 };

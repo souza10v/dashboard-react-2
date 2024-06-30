@@ -259,10 +259,10 @@ router.get("/api/customer", (req: Request, res: Response) => {
 // GET CUSTOMERS -- OK
 router.get(`${API_BASE_PATH}/customers`, new ListingCustomersController().handle);
 
-// ADD CUSTOMERS
+// CREATE CUSTOMERS
 router.post(`${API_BASE_PATH}/new-customer`, (req: Request, res: Response) => {
     console.log(req.body)
-    //res.json(users);
+    res.json({error : "error"});
 });
 
 // DELETE USER
