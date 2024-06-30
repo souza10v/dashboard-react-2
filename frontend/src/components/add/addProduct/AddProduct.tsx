@@ -154,7 +154,6 @@ const AddProduct = (props: Props) => {
                 required
                 id="standard-required-price"
                 label="Preço"
-                type="number"
                 defaultValue={formData.rentalPrice}
                 variant="standard"
                 onChange={(e) =>

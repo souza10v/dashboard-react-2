@@ -68,7 +68,7 @@ const Products = () => {
   async function loadCustomers() {
     try {
       setLoading(true); 
-      const response = await api.get("/api/products");
+      const response = await api.get("/products");
       setProducts(response.data);
       setLoading(false); 
     } catch (error) {

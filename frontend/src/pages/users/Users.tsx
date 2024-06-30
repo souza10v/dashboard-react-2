@@ -66,7 +66,7 @@ const Users = () => {
   async function loadCustomers() {
     try {
       setLoading(true); 
-      const response = await api.get("/api/customers");
+      const response = await api.get("/customers");
       setCustomers(response.data);
       setLoading(false); 
     } catch (error) {
