@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import "./addUser.scss";
 import { Button } from '@mui/material';
+import { api } from "../../../services/api";
 
 type Props = {
   slug: string;
@@ -57,38 +58,33 @@ const AddUser = (props: Props) => {
   });
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log(formData)
 
-    createUser(formData) //chamar ou nao a funcao
+    await createUser(formData) //chamar ou nao a funcao
 
     //props.setOpen(false)
   };
 
-  async function createUser(formData: CustomerData) { //deixar ou remover?
+  async function createUser(formData: CustomerData) {
     try {
-      const response = await fetch('/api/createUser', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ formData }),
-      });
+        const response = await api.post('/new-customer', formData);
+        const data = response.data;
 
-      const data = await response.json();
+        console.log(data);
 
-      console.log("data")
-      console.log(data)
-
-      if (data.success) {
-        console.log('User created successfully:', data);
-      } else {
-        console.error('Error creating user:', data.error);
-      }
+        if (data.success) {
+            console.log('User created successfully:', data);
+        } else {
+            console.error('Error creating user:', data.error);
+        }
     } catch (error) {
-      console.error('Error creating user:', error);
+        console.error('Error creating user:', error);
     }
-  }
+}
+
 
   const CPFMask = React.forwardRef((props, ref) => {
     return (
@@ -127,7 +123,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.customerName}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, customerName: e.target.defaultValue })}
+                  setFormData({ ...formData, customerName: e.target.value })}
               />
 
               <TextField
@@ -137,7 +133,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.customerLastName}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, customerLastName: e.target.defaultValue })}
+                  setFormData({ ...formData, customerLastName: e.target.value })}
               />
 
               <TextField
@@ -151,7 +147,7 @@ const AddUser = (props: Props) => {
                   shrink: true,
                 }}
                 onChange={(e) => {
-                  const parsedDate = new Date(e.target.defaultValue);
+                  const parsedDate = new Date(e.target.value);
                   //console.log(parsedDate);
                   setFormData({ ...formData, dateOfBirth: parsedDate })
                 }
@@ -178,7 +174,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.RG}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, RG: e.target.defaultValue })}
+                  setFormData({ ...formData, RG: e.target.value })}
               />
 
               <FormControl
@@ -189,7 +185,7 @@ const AddUser = (props: Props) => {
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
                   onChange={(e) =>
-                    setFormData({ ...formData, gender: e.target.defaultValue })}
+                    setFormData({ ...formData, gender: e.target.value })}
                   defaultValue={formData.gender}
                 >
                   <FormControlLabel value="female" control={<Radio />} label="Feminino" />
@@ -204,7 +200,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.email}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.defaultValue })}
+                  setFormData({ ...formData, email: e.target.value })}
               />
 
               <TextField //ver pre formatacao de telefone
@@ -214,7 +210,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.phone}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.defaultValue })}
+                  setFormData({ ...formData, phone: e.target.value })}
               />
 
               <TextField
@@ -224,7 +220,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.street}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, street: e.target.defaultValue })}
+                  setFormData({ ...formData, street: e.target.value })}
               />
 
               <TextField
@@ -234,7 +230,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.number}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, number: e.target.defaultValue })}
+                  setFormData({ ...formData, number: e.target.value })}
               />
 
               <TextField
@@ -243,7 +239,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.complement}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, complement: e.target.defaultValue })}
+                  setFormData({ ...formData, complement: e.target.value })}
               />
 
               <TextField
@@ -253,7 +249,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.neighborhood}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, neighborhood: e.target.defaultValue })}
+                  setFormData({ ...formData, neighborhood: e.target.value })}
               />
 
               <TextField
@@ -263,7 +259,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.city}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, city: e.target.defaultValue })}
+                  setFormData({ ...formData, city: e.target.value })}
               />
 
               <TextField
@@ -273,7 +269,7 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.state}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, state: e.target.defaultValue })}
+                  setFormData({ ...formData, state: e.target.value })}
               />
 
               <TextField //ver pre formatacao de CEP
@@ -283,15 +279,16 @@ const AddUser = (props: Props) => {
                 defaultValue={formData.ZIP}
                 variant="standard"
                 onChange={(e) =>
-                  setFormData({ ...formData, ZIP: e.target.defaultValue })}
+                  setFormData({ ...formData, ZIP: e.target.value })}
               />
             </div>
 
-            <Button type="submit" variant="contained">
-              Cadastrar
-            </Button>
+            
 
           </Box>
+          <Button type="submit" variant="contained">
+              Cadastrar
+            </Button>
         </form>
       </div>
     </div>

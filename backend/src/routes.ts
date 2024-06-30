@@ -256,13 +256,13 @@ router.get("/api/customer", (req: Request, res: Response) => {
     res.json(users);
 });
 
-// GET CUSTOMERS
+// GET CUSTOMERS -- OK
 router.get(`${API_BASE_PATH}/customers`, new ListingCustomersController().handle);
 
-// ADD USER
-router.post("/api/users", (req: Request, res: Response) => {
-    users.unshift(req.body)
-    res.json(users);
+// ADD CUSTOMERS
+router.post(`${API_BASE_PATH}/new-customer`, (req: Request, res: Response) => {
+    console.log(req.body)
+    //res.json(users);
 });
 
 // DELETE USER

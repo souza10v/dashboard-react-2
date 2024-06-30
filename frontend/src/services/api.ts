@@ -10,10 +10,6 @@ import axios from 'axios'
 import { API_BASE_URL } from '../config/apiConfig';
 
 export const api = axios.create({
-    baseURL: `http://localhost:3333${API_BASE_URL}`
+    baseURL: `http://localhost:3333${API_BASE_URL}`,
 })
 
-
-export const apiv1 = axios.create({
-    baseURL: "http://localhost:3333/ap1/v1"
-})
