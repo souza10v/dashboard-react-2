@@ -4,7 +4,7 @@ import { api } from "../../services/api";
 import DataTable from "../../components/dataTable/DataTable";
 import Button from "@mui/material/Button";
 import AddCustomer from "../../components/add/addCustomer/AddCustomer";
-import "./users.scss";
+import "./customers.scss";
 
 
 const columns: GridColDef[] = [
@@ -55,7 +55,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-const Users = () => {
+const Customers = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
@@ -77,7 +77,7 @@ const Users = () => {
   }
 
   return (
-    <div className="users">
+    <div className="customers">
       <div className="info">
         <h1>Clientes</h1>
         <Button variant="contained" onClick={() => setOpen(true)}>Cadastrar cliente</Button>
@@ -92,4 +92,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Customers;

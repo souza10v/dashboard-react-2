@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import { singleUser } from "../../data"
 import { api } from "../../services/api";
 import Single from "../../components/single/Single"
-import "./user.scss"
+import "./customer.scss"
 
-const User = () => {
+const Customer = () => {
 
   useEffect(() => {
     loadCustomers();
@@ -13,7 +13,7 @@ const User = () => {
   async function loadCustomers() {
     try {
       const response = await api.get("api/customers");
-      console.log(response.data); // Example usage
+      console.log(response.data); 
     } catch (error) {
       console.error("Error fetching customers:", error);
     }
@@ -26,4 +26,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Customer;

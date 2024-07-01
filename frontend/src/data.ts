@@ -23,8 +23,8 @@ export const menu = [
       listItems: [
         {
           id: 1,
-          title: "Users",
-          url: "/users",
+          title: "Customers",
+          url: "/customers",
           icon: "user.svg",
         },
         {
