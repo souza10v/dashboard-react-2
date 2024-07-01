@@ -8,7 +8,7 @@ class ListingCustomersController {
             const customers = await listingCustomersService.execute();
             res.json(customers); 
           } catch (error) {
-            console.error('Error fetching customers:', error);
+            //console.error('Error fetching customers:', error);
             res.status(500).json({ error: 'Internal Server Error' });
           }
     }

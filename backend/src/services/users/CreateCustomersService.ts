@@ -31,7 +31,7 @@ class CreateCustomerService {
             });
 
             if (existingCPF) {
-                throw new Error('CPF already exists');
+                throw new Error('CPF já cadastrado.');
             }
 
             const existingRG = await prisma.customer.findFirst({
@@ -41,7 +41,7 @@ class CreateCustomerService {
             });
 
             if (existingRG) {
-                throw new Error('RG already exists');
+                throw new Error('RG já cadastrado.');
             }
 
             const existingEmail = await prisma.customer.findFirst({
@@ -51,7 +51,7 @@ class CreateCustomerService {
             });
 
             if (existingEmail) {
-                throw new Error('Email already exists');
+                throw new Error('Email já cadastrado.');
             }
 
             const createdCustomer = await prisma.customer.create({
@@ -78,13 +78,13 @@ class CreateCustomerService {
             return createdCustomer;
         } catch (error) {
             console.error('Error creating customer:', error);
-            throw new Error('Failed to create customer');
+            if (error instanceof Error) {
+                throw new Error(error.message);
+            } else {
+                throw new Error(String(error));
+            }
         }
     }
 }
 
 export { CreateCustomerService };
-
-
-//Testar
-//Verificar erros sendo enviados

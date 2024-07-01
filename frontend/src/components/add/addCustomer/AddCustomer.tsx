@@ -57,7 +57,7 @@ const AddCustomer = (props: Props) => {
     state: '',
     ZIP: '',
   });
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('    ');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,19 +71,24 @@ const AddCustomer = (props: Props) => {
     try {
       const response = await api.post('/new-customer', formData);
       const data = response.data;
-
+  
       if (data.success) {
         console.log('Cliente criado com sucesso');
         setErrorMessage('');
-        props.setOpen(false)
+        props.setOpen(false);
       } else {
-        console.error('Error ao cadastrar cliente', data.error);
+        console.error('Erro ao cadastrar cliente', data.error);
         setErrorMessage(data.error);
       }
-    } catch (error) {
-      console.error('Error creating user:', error);
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setErrorMessage(error.response.data.error);
+      } else {
+        setErrorMessage('Erro ao criar usuário');
+      }
+      console.error('Erro ao criar usuário:', error);
     }
-}
+  }
 
   const CPFMask = React.forwardRef((props, ref) => {
     return (
@@ -95,8 +100,6 @@ const AddCustomer = (props: Props) => {
       />
     );
   });
-
-
 
   return (
     <div className="add">
@@ -134,7 +137,7 @@ const AddCustomer = (props: Props) => {
               />
 
               <TextField
-                //required
+                required
                 id="standard-required-date"
                 label="Data de Nascimento"
                 type="date"
@@ -151,7 +154,7 @@ const AddCustomer = (props: Props) => {
               />
 
               <TextField
-                //required
+                required
                 id="standard-required-cpf"
                 label="CPF"
                 defaultValue={formData.CPF}
@@ -163,7 +166,7 @@ const AddCustomer = (props: Props) => {
               />
 
               <TextField
-                //required
+                required
                 id="standard-required-rg"
                 label="RG"
                 defaultValue={formData.RG}
@@ -190,7 +193,7 @@ const AddCustomer = (props: Props) => {
               </FormControl>
 
               <TextField
-                //required
+                required
                 id="standard-required-email"
                 type="email"
                 label="Email"
@@ -280,6 +283,11 @@ const AddCustomer = (props: Props) => {
               />
             </div>
             
+            {errorMessage && (
+              <div className="showError">
+                <label>{errorMessage}</label>
+              </div>
+            )}
 
             <Button type="submit" variant="contained">
               Cadastrar

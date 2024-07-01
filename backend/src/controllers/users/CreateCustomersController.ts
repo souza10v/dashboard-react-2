@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { CreateCustomerService } from '../../services/users/CreateCustomersService';
 
-class CreateCustomerController {
+class CreateCustomersController {
     async handle(req: Request, res: Response) {
 
         const {
@@ -44,17 +44,11 @@ class CreateCustomerController {
             });
 
             res.json({ success: true })
+
         } catch (error: any) {
-
-            let errorMessage = 'Failed to create customer';
-
-            if (error.message === 'CPF already exists' || error.message === 'RG already exists' || error.message === 'Email already exists') {
-                errorMessage = error.message;
-            }
-
-            res.status(400).json({ success: false, error: errorMessage });
+            res.status(400).json({ success: false, error: error.message });
         }
     }
 }
 
-export { CreateCustomerController };
+export { CreateCustomersController };

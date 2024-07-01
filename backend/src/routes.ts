@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { API_BASE_PATH } from "./api/constants";
 import { ListingCustomersController } from "./controllers/users/ListingCustomersController";
+import { CreateCustomersController } from "./controllers/users/CreateCustomersController";
 
 
 const router = Router();
@@ -259,11 +260,8 @@ router.get("/api/customer", (req: Request, res: Response) => {
 // GET CUSTOMERS -- OK
 router.get(`${API_BASE_PATH}/customers`, new ListingCustomersController().handle);
 
-// CREATE CUSTOMERS
-router.post(`${API_BASE_PATH}/new-customer`, (req: Request, res: Response) => {
-    console.log(req.body)
-    res.json({error : "error"});
-});
+// CREATE CUSTOMERS -- OK
+router.post(`${API_BASE_PATH}/new-customer`, new CreateCustomersController().handle);
 
 // DELETE USER
 router.delete("/api/users/:id", (req: Request, res: Response) => {

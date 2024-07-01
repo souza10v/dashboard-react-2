@@ -17,7 +17,7 @@ datasource db {
 // atualizar - npx prisma generate
 
 model Customer {
-  id            String   @id @default(uuid())
+  id            Int      @id @default(autoincrement())
   firstName     String   @map("customer_name")
   lastName      String   @map("customer_lastname")
   dateOfBirth   DateTime @map("date_of_birth") 
@@ -39,31 +39,3 @@ model Customer {
 
   @@map("customers")
 }
-
-
-
-// model Customer {
-//   id            String   @id @default(uuid())
-//   customer_name String
-//   customer_lastname String
-//   date_of_birth DateTime // Altere para DateTime para melhor consistência com datas
-//   cpf           String   @unique
-//   rg            String?
-//   gender        String?
-//   email         String   @unique
-//   phone         String?
-//   street        String?
-//   number        String?
-//   complement    String?
-//   neighborhood  String?
-//   city          String?
-//   state         String?
-//   zip           String?
-//   created_at    DateTime @default(now())
-//   updated_at    DateTime @updatedAt
-
-//   @@map("customers")
-// }
-
-
-
