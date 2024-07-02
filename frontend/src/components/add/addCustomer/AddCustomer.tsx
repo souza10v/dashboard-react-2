@@ -10,16 +10,15 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Button } from '@mui/material';
 import { api } from "../../../services/api";
-import { styled } from '@mui/material/styles';
 import "./addCustomer.scss";
 
 type Props = {
   slug: string;
   columns: GridColDef[];
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleModalClose: () => void; // Add this prop
 };
 
-//Adicionar no banco de dados talvez usuario que o criou. Ver o que mais
 interface CustomerData {
   customerName: string;
   customerLastName: string;
@@ -39,7 +38,6 @@ interface CustomerData {
 }
 
 const AddCustomer = (props: Props) => {
-
   const [formData, setFormData] = useState<CustomerData>({
     customerName: '',
     customerLastName: '',
@@ -57,12 +55,12 @@ const AddCustomer = (props: Props) => {
     state: '',
     ZIP: '',
   });
-  const [errorMessage, setErrorMessage] = useState('    ');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await createUser(formData) //chamar ou nao a funcao
+    await createUser(formData);
 
     //props.setOpen(false)
   };
@@ -75,7 +73,7 @@ const AddCustomer = (props: Props) => {
       if (data.success) {
         console.log('Cliente criado com sucesso');
         setErrorMessage('');
-        props.setOpen(false);
+        props.handleModalClose(); // Call the passed function to close the modal and reload customers
       } else {
         console.error('Erro ao cadastrar cliente', data.error);
         setErrorMessage(data.error);
@@ -175,9 +173,7 @@ const AddCustomer = (props: Props) => {
                   setFormData({ ...formData, RG: e.target.value })}
               />
 
-              <FormControl
-                //required
-                >
+              <FormControl>
                 <FormLabel id="standard-search-gender">Gênero</FormLabel>
                 <RadioGroup
                   row
@@ -204,7 +200,6 @@ const AddCustomer = (props: Props) => {
               />
 
               <TextField
-                //required
                 id="standard-required-phone"
                 label="Telefone"
                 defaultValue={formData.phone}
@@ -234,6 +229,7 @@ const AddCustomer = (props: Props) => {
               />
 
               <TextField
+                //required
                 id="standard-required-complement"
                 label="Complemento"
                 defaultValue={formData.complement}
@@ -282,14 +278,14 @@ const AddCustomer = (props: Props) => {
                   setFormData({ ...formData, ZIP: e.target.value })}
               />
             </div>
-            
+
             {errorMessage && (
               <div className="showError">
                 <label>{errorMessage}</label>
               </div>
             )}
-
-            <Button type="submit" variant="contained">
+            
+            <Button variant="contained" type="submit">
               Cadastrar
             </Button>
           </Box>

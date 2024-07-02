@@ -76,6 +76,12 @@ const Customers = () => {
     }
   }
 
+  // Function to be passed to AddCustomer to reload customers
+  const handleModalClose = () => {
+    setOpen(false);
+    loadCustomers(); // Reload customers when the modal is closed
+  };
+
   return (
     <div className="customers">
       <div className="info">
@@ -87,7 +93,7 @@ const Customers = () => {
 
       {!loading && <DataTable slug="users" columns={columns} rows={customers} />}
 
-      {open && <AddCustomer slug="user" columns={columns} setOpen={setOpen} />}
+      {open && <AddCustomer slug="user" columns={columns} setOpen={setOpen} handleModalClose={handleModalClose} />}
     </div>
   );
 };
